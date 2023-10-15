@@ -45,4 +45,11 @@ def read_all_structures():
  connection.close()
  return result
 
-
+def read_all_infos():
+ connection = create_connection()
+ cursor = connection.cursor()
+ cursor.execute("SELECT * FROM info")
+ result = cursor.fetchall()
+ connection.commit()
+ connection.close()
+ return result
