@@ -35,6 +35,15 @@ def read_structure(id:int):
  connection.close()
  return result
 
+def read_structure_by_name(name:str):
+ connection = create_connection()
+ cursor = connection.cursor()
+ cursor.execute("SELECT * FROM structure where name = ?", (name,))
+ result = cursor.fetchone()
+ connection.commit()
+ connection.close()
+ return result
+
 
 def read_all_structures():
  connection = create_connection()
@@ -49,6 +58,24 @@ def read_all_infos():
  connection = create_connection()
  cursor = connection.cursor()
  cursor.execute("SELECT * FROM info")
+ result = cursor.fetchall()
+ connection.commit()
+ connection.close()
+ return result
+
+def read_info_by_year(year:int):
+ connection = create_connection()
+ cursor = connection.cursor()
+ cursor.execute("SELECT * FROM info where year= ?",(year,))
+ result = cursor.fetchall()
+ connection.commit()
+ connection.close()
+ return result
+
+def read_info_by_region(region:str):
+ connection = create_connection()
+ cursor = connection.cursor()
+ cursor.execute("SELECT * FROM info where region= ?",(region,))
  result = cursor.fetchall()
  connection.commit()
  connection.close()

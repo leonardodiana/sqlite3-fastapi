@@ -28,9 +28,11 @@ df_presenze_albergo.insert(4, "structure", 1)
 
 #print(df_presenze_albergo)
 
+
+#creo databse finale concatenando i dataset delle 3 strutture. Aggiungo una colonna con id crescente. Modifico nome colonne. 
 final=[df_presenze_agriturismo, df_presenze_campeggio, df_presenze_albergo]
 df=pd.concat(final)
 df.insert(0, "id", range(0, 0+len(df)))
 df.rename(columns = {'Regione':'region', 'Anno':'year', 'Presenze': 'presenze'}, inplace = True)
-print(df)
+#print(df)
 
