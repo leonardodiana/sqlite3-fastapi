@@ -41,3 +41,7 @@ def info_by_region_endpoint(region: str, q: str | None = None):
 def info_by_year_endpoint(year:int):
   return read_info_by_year(year)
 
+@app.get("/join")
+def info_join_structure_region_endpoint(id_structure:int, region:str, q: str | None = None):
+  return read_info_by_structure_and_region(id_structure, region)
+

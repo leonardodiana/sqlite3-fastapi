@@ -27,5 +27,7 @@ cursor.execute('''
 ''')
 db.commit()
 
+
+db.commit()
 df.to_sql('info', db, if_exists='replace', index=False)
 db.commit()

@@ -80,3 +80,14 @@ def read_info_by_region(region:str):
  connection.commit()
  connection.close()
  return result
+
+def read_info_by_structure_and_region(id_structure:int, region:str):
+ connection = create_connection()
+ cursor = connection.cursor()
+ cursor.execute("SELECT * FROM structure as s INNER JOIN info as i on s.id=i.structure WHERE s.id=? and i.region = ?",(id_structure, region,))
+ result = cursor.fetchall()
+ connection.commit()
+ connection.close()
+ return result
+
+print(read_info_by_structure_and_region(0,'Piemonte'))
