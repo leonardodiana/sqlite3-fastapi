@@ -29,7 +29,9 @@ def read_structure_endpoint(id: int):
 def read_all_structure_endpoint():
     return read_all_structures()
 
-
+@app.get("/info")
+def read_all_infos_endpoint():
+    return read_all_infos()
 # @app.get("/info")
 # def read_all_infos_endpoint(year: int | None = None, region: str | None = None):
 #     if(year!=None):
