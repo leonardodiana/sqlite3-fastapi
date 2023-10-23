@@ -66,14 +66,12 @@ def read_all_infos():
     connection = create_connection()
     cursor = connection.cursor()
     result =cursor.execute("SELECT * FROM info")
-    result = cursor.fetchall()
-    column_names = [d[0] for d in cursor.description]
-    for row in result:
-        info = dict(zip(column_names, row))
-        final = json.dumps(info)
+    result = [dict((cursor.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cursor.fetchall()]
     connection.commit()
     connection.close()
-    return final
+    json_output = json.dumps(result)
+    return result
 
 
 def read_info_by_year(year: int):
@@ -129,5 +127,6 @@ def read_info_by_structure_and_region(id_structure: int, region: str):
 #     connection.close()
 #     return result
 
-
-print(read_all_infos())
+result = read_all_infos()
+for x in result:
+    print(x["arrivi"])
