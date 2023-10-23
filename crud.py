@@ -70,7 +70,6 @@ def read_all_infos():
                for i, value in enumerate(row)) for row in cursor.fetchall()]
     connection.commit()
     connection.close()
-    json_output = json.dumps(result)
     return result
 
 
@@ -88,7 +87,8 @@ def read_info_by_region(region: str):
     connection = create_connection()
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM info where region= ?", (region,))
-    result = cursor.fetchall()
+    result = [dict((cursor.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cursor.fetchall()]
     connection.commit()
     connection.close()
     return result
@@ -104,29 +104,8 @@ def read_info_by_structure_and_region(id_structure: int, region: str):
             region,
         ),
     )
-    result = cursor.fetchall()
+    result = [dict((cursor.description[i][0], value) \
+               for i, value in enumerate(row)) for row in cursor.fetchall()]
     connection.commit()
     connection.close()
     return result
-
-# def search_info(year:int=None, region:str=None):
-#     #Build query
-#     query="SELECT * FROM info"
-#     conditions=[]
-#     if year is not None:
-#         conditions.append("year = ?")
-#     if region is not None:
-#         conditions.append("region = ?")
-#     if conditions:
-#         query += " WHERE " + " AND ".join(conditions)
-#     connection = create_connection()
-#     cursor = connection.cursor()
-#     cursor.execute(query,(year,))
-#     result = cursor.fetchall()
-#     connection.commit()
-#     connection.close()
-#     return result
-
-result = read_all_infos()
-for x in result:
-    print(x["arrivi"])

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import sqlite3
 from crud import *
 from models import *
-
+import numpy as np
 
 app = FastAPI()
 
@@ -53,6 +53,36 @@ def info_by_region_endpoint(region: str, q: str | None = None):
 def info_join_structure_region_endpoint(id_structure: int, region: str, q: str | None = None):
     return read_info_by_structure_and_region(id_structure, region)
 
-# @app.get("/search")
-# def info_search_endpoint(year:int=None, region:str=None):
-#     search_info(year, region)
+@app.get("/join/{column}")
+def info_join_filtered_by_column_endpoint(id_structure: int, region: str, column:str):
+    result=read_info_by_structure_and_region(id_structure, region)
+    result_filtered=[]
+    for x in result:
+        if(column=="arrivi"):
+            result_filtered.append(x["arrivi"])
+        elif(column=="partenze"):
+            result_filtered.append(x["partenze"])
+    return result_filtered
+
+@app.get("/mean-for_region_by_structure")
+def mean_for_region_by_strcture_endpoint(id_structure: int, region: str, column:str):
+    result=read_info_by_structure_and_region(id_structure, region)
+    result_filtered=[]
+    for x in result:
+        if(column=="arrivi"):
+            result_filtered.append(x["arrivi"])
+        elif(column=="partenze"):
+            result_filtered.append(x["partenze"])
+    return np.mean(result_filtered)
+
+
+@app.get("/mean-for_region")
+def mean_for_region_endpoint(region: str, column:str):
+    result=read_info_by_region(region)
+    result_filtered=[]
+    for x in result:
+        if(column=="arrivi"):
+            result_filtered.append(x["arrivi"])
+        elif(column=="partenze"):
+            result_filtered.append(x["partenze"])
+    return np.mean(result_filtered)
